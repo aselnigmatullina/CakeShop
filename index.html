@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Montserrat&display=swap" rel="stylesheet">
+
+    
+</head>
+<body>
+    <div id="app">
+        <header>
+                <nav class="navbar navbar-light bg-light">
+
+                        <h1 v-text="sitename" class="sitename"></h1>
+                        <button type="button" class="nav navbar-nav navbar-right cart" v-on:click="showCheckout">
+                     
+                          <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                                  
+                                <p><span class="glyphicon glyphicon-shopping-cart"> {{cartItemCount}}  </span></p>       
+                            </button>
+                      </nav>
+                     
+                      
+                          
+                             
+                          </button>
+                     
+        </header>
+        <main>
+
+
+            <div class="row product">
+                
+                <div v-if="showProduct">
+                    <div v-for="product in products">
+                        <div class="row">
+            
+               
+                        <div class="col-md-5 col-md-offset-0">
+                                <figure>
+                                    <img v-bind:src="product.image" class="image">
+                                </figure>
+                            </div>
+                            <div class="col col-md-5 col-md-offset-0 description">
+                                <h1 v-text="product.title" class="title"></h1>
+                                <p v-html="product.description"></p>
+                                <p  class="price">
+                                    {{product.price | formatPrice}}
+                                </p>
+                                <button class="btn btn-success" v-on:click="addToCart(product)" v-if="canAddToCart(product)">Add to cart</button>
+                                <button class="btn btn-danger" v-else>Add to cart</button>
+                                <span class="inventory-message" v-if="product.availableInventory-cartCount(product.id) === 0"> All Out!!!
+                                        
+    
+                                    </span>
+                                <span class="inventory-message" v-else-if="product.availableInventory-cartCount(product.id)<5">
+                                    Only {{product.availableInventory-cartCount(product.id)}} left!
+
+                                </span>
+                                <span class="inventory-message" v-else> Buy Now!
+    
+                                    </span>
+                                    <div class="rating">
+                                        <span v-bind:class="{'rating-active': checkRating(n,product)}" v-for="n in 5">★
+
+                                        </span>
+                                    </div>
+                                </div>
+                                </div>
+                                <hr>
+                                </div>
+                </div>
+                <div v-else>
+                   
+                    
+                        <div class="form-group">
+                            
+                    <div class="col-md-6">
+                        <strong>First Name:</strong>
+                        <input v-model.trim="order.firstName" class="form-control"/>
+                    </div>
+                        </div>
+                    <div class="form-group">
+                    <div class="col-md-12">
+                        <strong>Last Name</strong>
+                    </div>
+                        <div class="col-md-6">
+                        <input v-model.trim="order.lastName" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <strong>Address</strong>
+                        </div>
+                        <div class="col-md-6">
+                            <input v-model.trim="order.address" class="form-control"/>
+                        </div>
+                    </div>  <div class="form-group">
+                            <div class="col-md-12">
+                                <strong>City:</strong>
+                            </div>
+                            <div class="col-md-6">
+                                <input v-model.trim="order.city" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                                <div class="col-md-12">
+                                    <strong class="st">Country:</strong>
+                                </div>
+                                    <div class="col-md-6">
+                                <select v-model="order.country" class="form-control">
+                                    <option v-for="(country, key) in countries" v-bind:value="country">
+                                        {{key}}
+                                    </option>
+
+                                </select>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4 ">
+                                    <strong>Zip/Postal Code:</strong>
+                                    <input v-model.number="order.zip" class="form-control" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 boxes">
+                                    <input type="checkbox" id="gift" value="true" v-bind:true-value="order.sendGift" v-bind:false-value="order.dontSendGift"
+                                    v-model="order.gift">
+                                    <label for="gift">Ship as Gift?</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 boxes">
+                                    <input type="radio" name="" id="home" value="Home" v-bind:value="order.home" v-model="order.method">
+                                    <label for="home">Home</label>
+                                    <input type="radio" id="business" value="Business" v-bind:value="order.business" v-model="order.method">
+                                    <label for="business">Business</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary submit" v-on:click="submitForm">
+                                        Place Order
+
+                                        
+                                    </button>
+                                </div>
+                            </div>
+                    
+                    <div class="col-md-4 verify">
+                        <pre>
+                            First Name: {{order.firstName}}
+                            Last Name: {{order.lastName}}
+                            Address: {{order.address}}
+                            City: {{order.city}}
+                            Country: {{order.country}}
+                            Zip: {{typeof(order.zip)}}
+                            Method: {{order.method}}
+                            Gift:{{order.gift}}
+                        </pre>
+                    </div>
+
+
+
+
+
+                </div>
+              
+            </div> 
+        
+            
+        </main>
+
+    </div>
+    <script src="app.js"></script>
+    
+</body>
+</html>

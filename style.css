@@ -1,0 +1,36 @@
+body{
+    background: url('5.jpg') no-repeat center;
+    background-size: cover;
+}
+
+.image{
+    height: 300px;
+    width: 500px;
+    margin-left: 30px;
+    border-radius: 20px;
+}
+.korzina{
+    border: 1.5px solid black;
+    border-radius: 59%;
+}
+.col-expand {
+    text-align: center;
+    margin-left: 70px;
+    margin-top: -230px;
+}
+ body{
+     background-color: beige;
+ }
+.sitename{
+    text-align: center;
+    color: brown;
+    font-weight: 700;
+    font-family: 'Indie Flower', cursive;
+
+}
+.title{
+    
+    color: brown;
+    font-weight: 700;
+    font-family: 'Indie Flower', cursive;
+}

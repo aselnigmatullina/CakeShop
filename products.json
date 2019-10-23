@@ -1,0 +1,49 @@
+{
+    "products":[
+      {
+        "id": 1001,
+        "title": "Napoleon",
+        "description": "Cake Napoleon with custard",
+        "price": 999,
+        "image": "3.jpg",
+        "availableInventory": 10,
+        "rating": 5
+      },
+      {
+        "id": 1002,
+        "title": "Red Velvet cake",
+        "description": "Cake Red Velvet with cheese cream",
+        "price": 1299,
+        "image": "2.jpg",
+        "availableInventory": 7,
+        "rating": 1
+      },
+      {
+        "id": 1003,
+        "title": "Prague cake",
+        "description": "cake Prague with classic cream",
+        "price": 1100,
+        "image": "4.jpg",
+        "availableInventory": 99,
+        "rating": 4
+      },
+      {
+        "id": 1004,
+        "title": "Red Velvet cake",
+        "description": "Cake Red Velvet with cheese cream",
+        "price": 1799,
+        "image": "2.jpg",
+        "availableInventory": 11,
+        "rating": 5
+      },
+      {
+        "id": 1005,
+        "title": "Napoleon",
+        "description": "Cake Napoleon with custard",
+        "price": 999,
+        "image": "3.jpg",
+        "availableInventory": 25,
+        "rating": 1
+      }
+    ]
+  }
